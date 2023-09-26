@@ -1,4 +1,4 @@
-module data-platform-api-freight-agreement-reads-rmq-kube
+module data-platform-api-freight-order-reads-rmq-kube
 
 go 1.20
 

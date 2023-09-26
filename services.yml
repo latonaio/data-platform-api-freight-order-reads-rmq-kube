@@ -2,28 +2,28 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    run: data-platform-api-freight-agreement-reads-rmq-kube
-  name: data-platform-api-freight-agreement-reads-rmq-kube
+    run: data-platform-api-freight-order-reads-rmq-kube
+  name: data-platform-api-freight-order-reads-rmq-kube
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: data-platform-api-freight-agreement-reads-rmq-kube
-      app: FREIGHT_AGREEMENT
+      run: data-platform-api-freight-order-reads-rmq-kube
+      app: FREIGHT_ORDER
   template:
     metadata:
       labels:
-        run: data-platform-api-freight-agreement-reads-rmq-kube
-        app: FREIGHT_AGREEMENT
+        run: data-platform-api-freight-order-reads-rmq-kube
+        app: FREIGHT_ORDER
     spec:
-      hostname: data-platform-api-freight-agreement-reads-rmq-kube
+      hostname: data-platform-api-freight-order-reads-rmq-kube
       containers:
-        - name: data-platform-api-freight-agreement-reads-rmq-kube
-          image: latonaio/data-platform-api-freight-agreement-reads-rmq-kube
+        - name: data-platform-api-freight-order-reads-rmq-kube
+          image: latonaio/data-platform-api-freight-order-reads-rmq-kube
           imagePullPolicy: Always
           env:
             - name: "RMQ_QUEUE_FROM"
-              value: "data-platform-api-freight-agreement-reads-queue"
+              value: "data-platform-api-freight-order-reads-queue"
             - name: "RMQ_QUEUE_TO_SQL"
               value: ""
             - name: "RMQ_QUEUE_TO_EX_CONF"
@@ -33,7 +33,7 @@ spec:
             - name: "RMQ_QUEUE_TO_ITEMS_SUB_FUNC"
               value: ""
             - name: "RMQ_SESSION_CONTROL_QUEUE"
-              value: "data-platform-api-freight-agreement-reads-session-control-queue"
+              value: "data-platform-api-freight-order-reads-session-control-queue"
             - name: "DB_NAME"
               value: "DataPlatformMastersAndTransactionsMysqlKube"
           envFrom:
@@ -46,11 +46,11 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    run: data-platform-api-freight-agreement-reads-rmq-kube
-  name: data-platform-api-freight-agreement-reads-rmq-kube
+    run: data-platform-api-freight-order-reads-rmq-kube
+  name: data-platform-api-freight-order-reads-rmq-kube
 spec:
   selector:
-    run: data-platform-api-freight-agreement-reads-rmq-kube
+    run: data-platform-api-freight-order-reads-rmq-kube
   type: NodePort
   ports:
     - name: api

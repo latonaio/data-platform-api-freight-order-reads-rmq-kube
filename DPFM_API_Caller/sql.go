@@ -2,8 +2,8 @@ package dpfm_api_caller
 
 import (
 	"context"
-	dpfm_api_input_reader "data-platform-api-freight-agreement-reads-rmq-kube/DPFM_API_Input_Reader"
-	dpfm_api_output_formatter "data-platform-api-freight-agreement-reads-rmq-kube/DPFM_API_Output_Formatter"
+	dpfm_api_input_reader "data-platform-api-freight-order-reads-rmq-kube/DPFM_API_Input_Reader"
+	dpfm_api_output_formatter "data-platform-api-freight-order-reads-rmq-kube/DPFM_API_Output_Formatter"
 	"fmt"
 	"sync"
 

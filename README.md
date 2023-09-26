@@ -1,32 +1,27 @@
-# data-platform-api-freight-agreement-reads-rmq-kube
+# data-platform-api-freight-order-reads-rmq-kube
 
-data-platform-api-freight-agreement-reads-rmq-kube は、周辺業務システム　を データ連携基盤 と統合することを目的に、API でオーダーデータを取得するマイクロサービスです。  
-https://xxx.xxx.io/api/API_ORDERS_SRV/reads/
+data-platform-api-freight-order-reads-rmq-kube は、周辺業務システム　を データ連携基盤 と統合することを目的に、API で輸送指図データを取得するマイクロサービスです。  
+https://xxx.xxx.io/api/API_FREIGHT_ORDER_SRV/reads/
 
 ## 動作環境
 
-data-platform-api-freight-agreement-reads-rmq-kube の動作環境は、次の通りです。  
+data-platform-api-freight-order-reads-rmq-kube の動作環境は、次の通りです。  
 ・ OS: LinuxOS （必須）  
 ・ CPU: ARM/AMD/Intel（いずれか必須）  
 
 
 ## 本レポジトリ が 対応する API サービス
-data-platform-api-freight-agreement-reads-rmq-kube が対応する APIサービス は、次のものです。
+data-platform-api-freight-order-reads-rmq-kube が対応する APIサービス は、次のものです。
 
-APIサービス URL: https://xxx.xxx.io/api/API_ORDERS_SRV/reads/
+APIサービス URL: https://xxx.xxx.io/api/API_FREIGHT_ORDER_SRV/reads/
 
 ## 本レポジトリ に 含まれる API名
-data-platform-api-freight-agreement-reads-rmq-kube には、次の API をコールするためのリソースが含まれています。  
+data-platform-api-freight-order-reads-rmq-kube には、次の API をコールするためのリソースが含まれています。  
 
-* A_Header（データ連携基盤 オーダー - ヘッダデータ）
-* A_Partner（データ連携基盤 オーダー - 取引先データ）
-* A_Item（データ連携基盤 オーダー - 明細データ）
-* A_ItemPricingElement（データ連携基盤 オーダー - 明細価格決定要素データ）
-* A_ItemScheduleLine（データ連携基盤 オーダー - 明細納入日程行データ）
-* A_Address（データ連携基盤 オーダー - 住所データ）
+* A_Header（データ連携基盤 輸送指図 - ヘッダデータ）
 
 ## API への 値入力条件 の 初期値
-data-platform-api-freight-agreement-reads-rmq-kube において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
+data-platform-api-freight-order-reads-rmq-kube において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
 
 ## データ連携基盤のAPIの選択的コール
 
@@ -39,7 +34,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 ここでは、"Header" が指定されています。    
   
 ```
-	"api_schema": "DPFMOrdersReads",
+	"api_schema": "DPFMFreightOrderReads",
 	"accepter": ["Header"],
 ```
   
@@ -48,7 +43,7 @@ accepter において 下記の例のように、データの種別（＝APIの�
 全データを取得する場合、sample.json は以下のように記載します。  
 
 ```
-	"api_schema": "DPFMOrdersReads",
+	"api_schema": "DPFMFreightOrderReads",
 	"accepter": ["All"],
 ```
 
@@ -58,7 +53,7 @@ accepter における データ種別 の指定に基づいて DPFM_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *DPFMAPICaller) AsyncOrdersReads(
+func (c *DPFMAPICaller) AsyncFreightOrderReads(
 	accepter []string,
 	input *dpfm_api_input_reader.SDC,
 	output *dpfm_api_output_formatter.SDC,
@@ -77,7 +72,7 @@ func (c *DPFMAPICaller) AsyncOrdersReads(
 
 ## Output  
 本マイクロサービスでは、[golang-logging-library-for-data-platform](https://github.com/latonaio/golang-logging-library-for-data-platform) により、以下のようなデータがJSON形式で出力されます。  
-以下の sample.json の例は オーダー の ヘッダデータ が取得された結果の JSON の例です。  
+以下の sample.json の例は 輸送指図 の ヘッダデータ が取得された結果の JSON の例です。  
 以下の項目のうち、"OrderID" ～ "PlusMinusFlag" は、/DPFM_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
